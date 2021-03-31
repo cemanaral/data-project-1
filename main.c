@@ -53,6 +53,30 @@ BasketPtr headBasket = NULL;
 ProductPtr headProduct = NULL;
 ///////////////
 
+// TODO: findName() 
+
+
+int addCustomer(int id, char* name, char* surname) {
+    /*
+        Adds customer to headCustomer linked list.
+        return 1: succesful
+        return 0  failed
+    */
+    CustomerPtr newCustomerPtr = malloc(sizeof(Customer));
+    CustomerPtr previousCustomerPtr = NULL;
+    CustomerPtr currentCustomerPtr = headCustomer;
+
+    // insert starts here
+    newCustomerPtr->id = id;
+    strcpy( newCustomerPtr->name, name );
+    strcpy( newCustomerPtr->surname, surname );
+    newCustomerPtr->basketList = NULL;
+    ///////////
+
+
+    return 1;
+}
+
 void readCustomerFile() {
     /*
         Reads CUSTOMER_FILE and inserts into headCustomer
@@ -71,7 +95,7 @@ void readCustomerFile() {
     while(fgets(currentLine, 100, file)) {
         sscanf(currentLine, "%d %s %s", &id, name, surname);
 
-        printf("id: %d, name: %s, surname: %s\n", id, name, surname);
+        // printf("id: %d, name: %s, surname: %s\n", id, name, surname);
     }
 
     fclose(file);
