@@ -15,18 +15,11 @@ struct Customer {
     struct Basket* basketList;
 };
 
-typedef struct Customer Customer;
-typedef Customer* CustomerPtr;
-
-
 struct Basket {
     int id;
     struct Product* productList;
     int amount; // Total price
 };
-
-typedef struct Basket Basket;
-typedef Basket* BasketPtr;
 
 struct Product {
     int id;
@@ -35,10 +28,23 @@ struct Product {
     struct Product* nextPtr;
 };
 
+// Typedefs
+typedef struct Customer Customer;
+typedef Customer* CustomerPtr;
+
+typedef struct Basket Basket;
+typedef Basket* BasketPtr;
+
 typedef struct Product Product;
 typedef Product* ProductPtr;
+////////
 
 
+// Global head ptrs for convinience
+CustomerPtr headCustomer = NULL;
+BasketPtr headBasket = NULL;
+ProductPtr headProduct = NULL;
+///////////////
 
 int main() {
     return 0;
