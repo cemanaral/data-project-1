@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 struct Customer {
+    int id;
     char* name;
     char* surname;
     struct Basket* basketList;
@@ -9,13 +10,15 @@ struct Customer {
 
 struct Basket {
     int id;
-    int amount;
     struct Product* productList;
+    int amount; // Total price
 };
 
 
 struct Product {
     int id;
+    char* name;
+    char* category;
     struct Product* nextPtr;
 };
 
