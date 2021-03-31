@@ -6,12 +6,14 @@
 */
 
 #include <stdio.h>
-#include <stdlib.h>
+#include <stdlib.h> // For malloc
+#include <string.h> // For strtok()
 
 // File name macros
 #define CUSTOMER_FILE "customer.txt"
 #define BASKET_FILE "basket.txt"
 #define PRODUCT_FILE "product.txt"
+#define BUFFER 30 // for reading files
 
 struct Customer {
     int id;
@@ -60,8 +62,16 @@ void readCustomerFile() {
 
     file = fopen(CUSTOMER_FILE, "r");
 
+    // For reading the file
+    int id;
+    char name[BUFFER];
+    char surname[BUFFER];
+
+    // Reading starts here
     while(fgets(currentLine, 100, file)) {
-        printf("%s\n", currentLine);
+        sscanf(currentLine, "%d %s %s", &id, name, surname);
+
+        printf("id: %d, name: %s, surname: %s\n", id, name, surname);
     }
 
     fclose(file);
