@@ -58,12 +58,12 @@ ProductPtr headProduct = NULL;
 // TODO: findName() 
 
 
-void addCustomer(int id, char* name, char* surname) {
+void addCustomer(CustomerPtr* headCustomer, int id, char* name, char* surname) {
     /*
         Adds customer to headCustomer linked list.
     */
     CustomerPtr newCustomerPtr = (CustomerPtr)malloc(sizeof(Customer));
-    CustomerPtr currentCustomerPtr = headCustomer;
+    CustomerPtr currentCustomerPtr = *headCustomer;
 
     // insert starts here
     newCustomerPtr->id = id;
@@ -74,8 +74,8 @@ void addCustomer(int id, char* name, char* surname) {
     ///////////
 
     // If linked list is empty, inserts to head and terminates function
-    if (headCustomer == NULL) {
-        headCustomer = newCustomerPtr;
+    if (*headCustomer == NULL) {
+        *headCustomer = newCustomerPtr;
         return;
     }
 
@@ -123,7 +123,7 @@ void readCustomerFile() {
     while(fgets(currentLine, 100, file)) {
         sscanf(currentLine, "%d %s %s", &id, name, surname);
         printf("%d", id);
-        addCustomer(id, name, surname);
+        addCustomer(&headCustomer, id, name, surname);
     }
 
     fclose(file);
@@ -131,7 +131,7 @@ void readCustomerFile() {
 
 int main() {
     readCustomerFile();
-    // printCustomers();
+    printCustomers();
 
     return 0;
 }
