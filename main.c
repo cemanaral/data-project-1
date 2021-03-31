@@ -1,13 +1,26 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct Node {
-    int data;
-    struct Node* nextPtr;
+struct Customer {
+    char* name;
+    char* surname;
+    struct Basket* basketList;
 };
 
-typedef struct Node Node;
-typedef Node* NodePtr;
+struct Basket {
+    int id;
+    int amount;
+    struct Product* productList;
+};
+
+
+struct Product {
+    int id;
+    struct Product* nextPtr;
+};
+
+
+
 
 int main() {
     return 0;
