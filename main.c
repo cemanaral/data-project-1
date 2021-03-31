@@ -9,9 +9,9 @@
 #include <stdlib.h>
 
 // File name macros
-#define CUSTOMER_FILE "customer.txt";
-#define BASKET_FILE "basket.txt";
-#define PRODUCT_FILE "product.txt";
+#define CUSTOMER_FILE "customer.txt"
+#define BASKET_FILE "basket.txt"
+#define PRODUCT_FILE "product.txt"
 
 struct Customer {
     int id;
@@ -51,9 +51,26 @@ BasketPtr headBasket = NULL;
 ProductPtr headProduct = NULL;
 ///////////////
 
+void readCustomerFile() {
+    /*
+        Reads CUSTOMER_FILE and inserts into headCustomer
+    */
+    FILE* file;
+    char currentLine[100];  // 100 is our buffer.
 
+    file = fopen(CUSTOMER_FILE, "r");
+
+    while(fgets(currentLine, 100, file)) {
+        printf("%s\n", currentLine);
+    }
+
+    fclose(file);
+}
 
 int main() {
+    readCustomerFile();
+
+
     return 0;
 }
 
