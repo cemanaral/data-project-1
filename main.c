@@ -8,6 +8,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// File name macros
+#define CUSTOMER_FILE "customer.txt";
+#define BASKET_FILE "basket.txt";
+#define PRODUCT_FILE "product.txt";
+
 struct Customer {
     int id;
     char* name;
@@ -45,6 +50,8 @@ CustomerPtr headCustomer = NULL;
 BasketPtr headBasket = NULL;
 ProductPtr headProduct = NULL;
 ///////////////
+
+
 
 int main() {
     return 0;
