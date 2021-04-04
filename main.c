@@ -268,6 +268,24 @@ void readProductFile() {
 }
 
 
+void deleteCustomer(char *name, char *surname) {
+
+    CustomerPtr temp = headCustomer;
+
+    while (strcmp(temp->nextPtr->name, name) && strcmp(temp->nextPtr->surname, surname) && temp->nextPtr != NULL) {
+        temp = temp->nextPtr;
+    }
+
+    if (temp->nextPtr->nextPtr != NULL) {
+        CustomerPtr temp1 = temp->nextPtr;
+        temp->nextPtr = temp1->nextPtr;
+        free(temp1);
+    } else {
+        CustomerPtr temp1 = temp->nextPtr;
+        free(temp1->nextPtr);
+    }
+}
+
 
 int main() {
     // readCustomerFile();
