@@ -55,7 +55,24 @@ BasketPtr headBasket = NULL;
 ProductPtr headProduct = NULL;
 ///////////////
 
-// TODO: findName() 
+int isEmpty(void *headPtr) {
+    /*
+        If head pointer is empty, returns 1
+        else returns 0
+    */
+
+    return headPtr == 0;
+}
+
+
+CustomerPtr findCustomer(int id) {
+    /*
+        Finds customer by id and returns its memory address.
+    */
+    CustomerPtr currentCustomerPtr = NULL;
+
+    return currentCustomerPtr;
+} 
 
 
 void addCustomer(int id, char* name, char* surname) {
@@ -74,7 +91,7 @@ void addCustomer(int id, char* name, char* surname) {
     ///////////
 
     // If linked list is empty, inserts to headCustomer and terminates function
-    if (headCustomer == NULL) {
+    if (isEmpty(headCustomer)) {
         headCustomer = newCustomerPtr;
         return;
     }
@@ -94,7 +111,7 @@ void printCustomers() {
     */
     CustomerPtr currentNode = headCustomer;
 
-    if (headCustomer == NULL) {
+    if (isEmpty(headCustomer)) {
         puts("Customer List is empty");
         return;
     }
@@ -127,7 +144,7 @@ void readCustomerFile() {
     // Reading starts here
     while(fgets(currentLine, BUFFER, file)) {
         sscanf(currentLine, "%d %s %s", &id, name, surname);
-        printf( "%d %s %s\n", id, name, surname);
+        // printf( "%d %s %s\n", id, name, surname);
         addCustomer(id, name, surname);
     }
 
@@ -135,9 +152,13 @@ void readCustomerFile() {
 }
 
 int main() {
+    printf("is empty customer: %d\n", isEmpty(headCustomer));
     readCustomerFile();
     printCustomers();
+    printf("is empty customer: %d\n", isEmpty(headCustomer));
 
+    printf("is empty product: %d\n", isEmpty(headProduct));
+    printf("is empty basket: %d\n", isEmpty(headBasket));
     return 0;
 }
 
