@@ -7,7 +7,7 @@
 
 #include <stdio.h>
 #include <stdlib.h> // For malloc
-#include <string.h> // For strtok()
+#include <string.h>
 
 // File name macros
 #define CUSTOMER_FILE "customer.txt"
@@ -71,19 +71,14 @@ CustomerPtr findCustomer(int id) {
     */
     CustomerPtr currentCustomerPtr = NULL;
     
-    if (isEmpty(headCustomer)) {    // If list is empty, returns NULL
-        return currentCustomerPtr;
-    }
-
-    else {
+    if (!isEmpty(headCustomer)) {    // If list is not empty, finds the currentCustomerPtr
         currentCustomerPtr = headCustomer;
-        while (currentCustomerPtr != NULL && currentCustomerPtr->id == id) {
+        while (currentCustomerPtr != NULL && currentCustomerPtr->id != id) {
             currentCustomerPtr = currentCustomerPtr->nextPtr;
         }
-
+        
     }
 
-    
     return currentCustomerPtr;
 } 
 
@@ -174,7 +169,7 @@ int main() {
     // printf("is empty product: %d\n", isEmpty(headProduct));
     // printf("is empty basket: %d\n", isEmpty(headBasket));
     
-    printf("name of id 1 is %s", findCustomer(1)->name);
+    printf("address of id 6 is %p", findCustomer(6));
     
     return 0;
 }
