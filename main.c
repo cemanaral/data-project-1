@@ -70,7 +70,20 @@ CustomerPtr findCustomer(int id) {
         Finds customer by id and returns its memory address.
     */
     CustomerPtr currentCustomerPtr = NULL;
+    
+    if (isEmpty(headCustomer)) {    // If list is empty, returns NULL
+        return currentCustomerPtr;
+    }
 
+    else {
+        currentCustomerPtr = headCustomer;
+        while (currentCustomerPtr != NULL && currentCustomerPtr->id == id) {
+            currentCustomerPtr = currentCustomerPtr->nextPtr;
+        }
+
+    }
+
+    
     return currentCustomerPtr;
 } 
 
@@ -104,6 +117,7 @@ void addCustomer(int id, char* name, char* surname) {
     
     currentCustomerPtr->nextPtr = newCustomerPtr;
 }
+
 
 void printCustomers() {
     /*
@@ -152,13 +166,16 @@ void readCustomerFile() {
 }
 
 int main() {
-    printf("is empty customer: %d\n", isEmpty(headCustomer));
+    // printf("is empty customer: %d\n", isEmpty(headCustomer));
     readCustomerFile();
     printCustomers();
-    printf("is empty customer: %d\n", isEmpty(headCustomer));
+    // printf("is empty customer: %d\n", isEmpty(headCustomer));
 
-    printf("is empty product: %d\n", isEmpty(headProduct));
-    printf("is empty basket: %d\n", isEmpty(headBasket));
+    // printf("is empty product: %d\n", isEmpty(headProduct));
+    // printf("is empty basket: %d\n", isEmpty(headBasket));
+    
+    printf("name of id 1 is %s", findCustomer(1)->name);
+    
     return 0;
 }
 
