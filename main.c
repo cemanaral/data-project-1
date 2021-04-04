@@ -32,6 +32,7 @@ struct Basket {
 
 struct Product {
     int id;
+    int price;
     char name[BUFFER / 2];
     char category[BUFFER / 2];
     struct Product* nextPtr;
@@ -51,6 +52,7 @@ typedef Product* ProductPtr;
 
 // Global head ptrs for convinience
 CustomerPtr headCustomer = NULL;
+ProductPtr  headProduct = NULL;
 ///////////////
 
 int isEmpty(void *headPtr) {
@@ -178,6 +180,37 @@ void readBasketFile() {
     fclose(file);    
 }
 
+void addProduct(int id, char *name, char *category, int price) {
+    /*
+        Adds product to headProduct linked list.
+    */
+    ProductPtr previousPtr = NULL;
+    ProductPtr currentPtr = headProduct;
+    ProductPtr newProductPtr = (ProductPtr) malloc(sizeof(Product));
+
+    // data insertion
+    newProductPtr->id = id;
+    strcpy(newProductPtr->name, name);
+    strcpy(newProductPtr->category, category);
+    newProductPtr->price = price;
+
+    while (currentPtr != NULL && strcmp(newProductPtr->name, currentPtr->name) > 0) {
+        previousPtr = currentPtr;
+        currentPtr = currentPtr->nextPtr;
+    }
+
+    if (previousPtr == NULL) { // If list is empty
+        newProductPtr->nextPtr = NULL;
+        headProduct = newProductPtr;
+    }
+
+    else {
+        previousPtr->nextPtr = newProductPtr;
+        newProductPtr->nextPtr = currentPtr;
+    }
+
+}
+
 void readProductFile() {
     FILE* file;
     char currentLine[BUFFER];
@@ -192,8 +225,9 @@ void readProductFile() {
     while(fgets(currentLine, BUFFER, file)) {
         sscanf(currentLine, "%d %s %s %d", 
             &id, name, category, &price);
-        printf( "id: %d name: %s category: %s price: %d\n",
-            id, name, category, price);
+        addProduct(id, name, category, price);
+        // printf( "id: %d name: %s category: %s price: %d\n",
+        //     id, name, category, price);
     }
 
     fclose(file);
