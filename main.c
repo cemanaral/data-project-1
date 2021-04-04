@@ -13,12 +13,12 @@
 #define CUSTOMER_FILE "customer.txt"
 #define BASKET_FILE "basket.txt"
 #define PRODUCT_FILE "product.txt"
-#define BUFFER 30 // for reading files
+#define BUFFER 100 // for reading files and to determine max length of strings
 
 struct Customer {
     int id;
-    char* name;
-    char* surname;
+    char name[BUFFER / 2];
+    char surname[BUFFER / 2];
     struct Basket* basketList;
     struct Customer* nextPtr;
 };
@@ -32,8 +32,8 @@ struct Basket {
 
 struct Product {
     int id;
-    char* name;
-    char* category;
+    char name[BUFFER / 2];
+    char category[BUFFER / 2];
     struct Product* nextPtr;
 };
 
@@ -58,24 +58,24 @@ ProductPtr headProduct = NULL;
 // TODO: findName() 
 
 
-void addCustomer(CustomerPtr* headCustomer, int id, char* name, char* surname) {
+void addCustomer(int id, char* name, char* surname) {
     /*
         Adds customer to headCustomer linked list.
     */
     CustomerPtr newCustomerPtr = (CustomerPtr)malloc(sizeof(Customer));
-    CustomerPtr currentCustomerPtr = *headCustomer;
+    CustomerPtr currentCustomerPtr = headCustomer;
 
-    // insert starts here
+    // insertion to data fields of newCustomerPtr
     newCustomerPtr->id = id;
-    strcpy( newCustomerPtr->name, name );
+    strcpy(newCustomerPtr->name, name);
     strcpy( newCustomerPtr->surname, surname );
     newCustomerPtr->basketList = NULL;
     newCustomerPtr->nextPtr = NULL;
     ///////////
 
-    // If linked list is empty, inserts to head and terminates function
-    if (*headCustomer == NULL) {
-        *headCustomer = newCustomerPtr;
+    // If linked list is empty, inserts to headCustomer and terminates function
+    if (headCustomer == NULL) {
+        headCustomer = newCustomerPtr;
         return;
     }
 
@@ -110,20 +110,20 @@ void readCustomerFile() {
         Reads CUSTOMER_FILE and inserts into headCustomer
     */
     FILE* file;
-    char currentLine[100];  // 100 is our buffer.
+    char currentLine[BUFFER];  // 100 is our buffer.
 
     file = fopen(CUSTOMER_FILE, "r");
 
     // For reading the file
     int id;
-    char name[BUFFER];
-    char surname[BUFFER];
+    char name[BUFFER / 2];
+    char surname[BUFFER / 2];
 
     // Reading starts here
-    while(fgets(currentLine, 100, file)) {
+    while(fgets(currentLine, BUFFER, file)) {
         sscanf(currentLine, "%d %s %s", &id, name, surname);
-        printf("%d", id);
-        addCustomer(&headCustomer, id, name, surname);
+        printf( "%d %s %s\n", id, name, surname);
+        addCustomer(id, name, surname);
     }
 
     fclose(file);
