@@ -113,6 +113,34 @@ void addCustomer(int id, char* name, char* surname) {
     currentCustomerPtr->nextPtr = newCustomerPtr;
 }
 
+void printProducts() {
+    /*
+        Prints headProduct list.
+    */
+    ProductPtr currentNode = headProduct;
+
+    if (isEmpty(headProduct)) {
+        puts("Product list is empty.");
+        return;
+    }
+
+    puts("**Product List**");
+
+    while(currentNode->nextPtr != NULL) {
+        printf("id: %d name: %s category: %s price: %d\n",
+            currentNode->id, currentNode->name,
+            currentNode->category, currentNode->price);
+
+        currentNode = currentNode->nextPtr;
+    }
+    printf("id: %d name: %s category: %s price: %d\n",
+            currentNode->id, currentNode->name,
+            currentNode->category, currentNode->price);
+    printf("\n");
+
+
+}
+
 
 void printCustomers() {
     /*
@@ -194,7 +222,8 @@ void addProduct(int id, char *name, char *category, int price) {
     strcpy(newProductPtr->category, category);
     newProductPtr->price = price;
 
-    while (currentPtr != NULL && strcmp(newProductPtr->name, currentPtr->name) > 0) {
+    // d
+    while (currentPtr != NULL ) {
         previousPtr = currentPtr;
         currentPtr = currentPtr->nextPtr;
     }
@@ -225,6 +254,9 @@ void readProductFile() {
     while(fgets(currentLine, BUFFER, file)) {
         sscanf(currentLine, "%d %s %s %d", 
             &id, name, category, &price);
+
+
+        printf("%d %s %s %d\n", id, name, category, price);
         addProduct(id, name, category, price);
         // printf( "id: %d name: %s category: %s price: %d\n",
         //     id, name, category, price);
@@ -242,7 +274,7 @@ int main() {
     // printCustomers();
     // readBasketFile();
     readProductFile();
-
+    printProducts();
     return 0;
 }
 
