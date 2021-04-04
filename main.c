@@ -51,8 +51,6 @@ typedef Product* ProductPtr;
 
 // Global head ptrs for convinience
 CustomerPtr headCustomer = NULL;
-BasketPtr headBasket = NULL;
-ProductPtr headProduct = NULL;
 ///////////////
 
 int isEmpty(void *headPtr) {
@@ -160,17 +158,57 @@ void readCustomerFile() {
     fclose(file);
 }
 
-int main() {
-    // printf("is empty customer: %d\n", isEmpty(headCustomer));
-    readCustomerFile();
-    printCustomers();
-    // printf("is empty customer: %d\n", isEmpty(headCustomer));
 
-    // printf("is empty product: %d\n", isEmpty(headProduct));
-    // printf("is empty basket: %d\n", isEmpty(headBasket));
-    
-    printf("address of id 6 is %p", findCustomer(6));
-    
+
+void readBasketFile() {
+    FILE* file;
+    char currentLine[BUFFER];
+
+    file = fopen(BASKET_FILE, "r");
+
+    int customerID;
+    int basketID;
+    int productID;
+
+    while(fgets(currentLine, BUFFER, file)) {
+        sscanf(currentLine, "%d %d %d", &customerID, &basketID, &productID);
+        printf( "customerID: %d basketID: %d productID: %d\n", customerID, basketID, productID);
+    }
+
+    fclose(file);    
+}
+
+void readProductFile() {
+    FILE* file;
+    char currentLine[BUFFER];
+
+    file = fopen(PRODUCT_FILE, "r");
+
+    int id;
+    char name[BUFFER / 2];
+    char category[BUFFER / 2];
+    int price;
+
+    while(fgets(currentLine, BUFFER, file)) {
+        sscanf(currentLine, "%d %s %s %d", 
+            &id, name, category, &price);
+        printf( "id: %d name: %s category: %s price: %d\n",
+            id, name, category, price);
+    }
+
+    fclose(file);
+
+
+}
+
+
+
+int main() {
+    // readCustomerFile();
+    // printCustomers();
+    // readBasketFile();
+    readProductFile();
+
     return 0;
 }
 
