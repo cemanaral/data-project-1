@@ -89,6 +89,9 @@ void addCustomer(int id, char* name, char* surname) {
 }
 
 void printCustomers() {
+    /*
+        Prints customers that are in headCustomer linked list.
+    */
     CustomerPtr currentNode = headCustomer;
 
     if (headCustomer == NULL) {
@@ -102,6 +105,8 @@ void printCustomers() {
             currentNode->id, currentNode->name, currentNode->surname);
         currentNode = currentNode->nextPtr;
     }
+    printf("id: %d, name: %s, surname: %s\n", 
+            currentNode->id, currentNode->name, currentNode->surname);
     printf("\n");
 }
 
