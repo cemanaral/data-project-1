@@ -23,13 +23,23 @@ struct Customer {
     struct Customer* nextPtr;
 };
 
-struct Basket {
-    int id;
-    struct Product* productList;
-    int amount; // Total price
-    struct Basket* nextPtr;
+///////////////////
+// For struct Basket
+struct ProductList {
+    int productID;
+    struct ProductList* next;
 };
 
+struct Basket {
+    int id;
+    int amount; // Total price
+    struct Basket* nextPtr;
+    struct ProductList* productList;
+};
+///////////////////
+
+
+// For an indepented linked list for products
 struct Product {
     int id;
     int price;
@@ -47,6 +57,9 @@ typedef Basket* BasketPtr;
 
 typedef struct Product Product;
 typedef Product* ProductPtr;
+
+typedef struct ProductList ProductList;
+typedef ProductList* ProductListPtr;
 ////////
 
 
