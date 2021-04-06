@@ -235,8 +235,8 @@ void addProduct(int id, char *name, char *category, int price) {
     strcpy(newProductPtr->category, category);
     newProductPtr->price = price;
 
-    // d
-    while (currentPtr != NULL ) {
+    // while (currentPtr != NULL && currentPtr->name[0] <= newProductPtr->name[0])
+    while (currentPtr != NULL &&  currentPtr->name[0] <= newProductPtr->name[0] ){
         previousPtr = currentPtr;
         currentPtr = currentPtr->nextPtr;
     }
@@ -269,7 +269,6 @@ void readProductFile() {
             &id, name, category, &price);
 
 
-        printf("%d %s %s %d\n", id, name, category, price);
         addProduct(id, name, category, price);
         // printf( "id: %d name: %s category: %s price: %d\n",
         //     id, name, category, price);
