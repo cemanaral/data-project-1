@@ -300,11 +300,13 @@ void deleteCustomer(char *name, char *surname) {
 
 
 int main() {
-    // readCustomerFile();
+    readCustomerFile();
     // printCustomers();
-    // readBasketFile();
+    
     readProductFile();
-    printProducts();
+    // printProducts();
+
+    readBasketFile();
     return 0;
 }
 
