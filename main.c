@@ -67,6 +67,8 @@ typedef ProductList* ProductListPtr;
 void addBasket(int customerID, int basketID, int productID);
 BasketPtr getBasket(CustomerPtr customer, int basketID);
 void addProductList(BasketPtr basket, int productID);
+void printBasket(BasketPtr currentBasket);
+void printProductList(ProductListPtr currentProductList);
 ////////
 
 // Global head ptrs for convinience
@@ -115,12 +117,7 @@ void addCustomer(int id, char* name, char* surname) {
     strcpy( newCustomerPtr->surname, surname );
     
     // insertion to the basketList
-    newCustomerPtr->basketList = (BasketPtr)malloc(sizeof(Basket)); // creates an empty basket
-    newCustomerPtr->basketList->amount = 0;
-    newCustomerPtr->basketList->id = 1;
-    newCustomerPtr->basketList->nextPtr = NULL;
-    newCustomerPtr->basketList->productList = (ProductListPtr)malloc(sizeof(ProductList));
-
+    newCustomerPtr->basketList = NULL; // creates an empty basket
     newCustomerPtr->nextPtr = NULL;
     /////////////////////////////////////////////
 
@@ -238,37 +235,67 @@ void readBasketFile() {
     fclose(file);    
 }
 
+
+// TODO: findProduct()
+
+
 void addBasket(int customerID, int basketID, int productID) {
     /*
         Adds basket to customer
         and puts product in the basket.
     */
     CustomerPtr customer = findCustomer(customerID);
-    BasketPtr basket;
-
-
-    
+    BasketPtr currentBasket = customer->basketList;
 
     // if basket does not exists, creates new basket
     // and appends it to end
-   if ( (basket = getBasket(customer, basketID) ) == NULL ) {
-        BasketPtr currentBasket = customer->basketList;
+   if (getBasket(customer, basketID) == NULL) {
         BasketPtr newBasket = (BasketPtr)malloc(sizeof(Basket));
         
         newBasket->id = basketID;
         newBasket->amount = 0;
         newBasket->nextPtr = NULL;
-        newBasket->productList = (ProductListPtr) malloc(sizeof(ProductList));
-        newBasket->productList->next = NULL;
 
-        // getting to the last basket to append the new one
-        while (currentBasket->nextPtr != NULL) {
-            currentBasket = currentBasket->nextPtr;
+        // finds the correct location to add new basket
+        if (customer->basketList == NULL)
+            customer->basketList = newBasket;
+        else {
+            while (currentBasket->nextPtr != NULL) {
+                currentBasket = currentBasket->nextPtr;
+            }
+            currentBasket->nextPtr = newBasket;
         }
-        currentBasket->nextPtr = newBasket;
-        basket = getBasket(customer, basketID);
     }
-    addProductList(basket, productID);
+
+    
+    currentBasket = customer->basketList;
+    // finds the correct basket to add product
+    while (currentBasket->nextPtr != NULL && currentBasket->id != basketID) 
+        currentBasket = currentBasket->nextPtr;
+
+    if (currentBasket == NULL) {
+        puts("Error! currentBasket is NULL");
+        return;
+    }
+
+    // If currentBasket->productList is empty
+    if (currentBasket->productList == NULL) {
+        currentBasket->productList = (ProductListPtr)malloc(sizeof(ProductList));
+        currentBasket->productList->productID = productID;
+        currentBasket->productList->next = NULL;
+    }
+
+    else {
+        // getting to the end of productlist
+        // to append new product node
+        ProductListPtr currentProductListPtr = currentBasket->productList;
+        while (currentProductListPtr->next != NULL)
+            currentProductListPtr = currentProductListPtr->next;
+        
+        currentProductListPtr->next = (ProductListPtr)malloc(sizeof(ProductList));
+        currentProductListPtr->next->productID = productID;
+    }
+     
 
 }
 
@@ -308,7 +335,10 @@ BasketPtr getBasket(CustomerPtr customer, int basketID) {
         currentBasket = currentBasket->nextPtr;
     }
 
-    // printf("currentBasket ptr: %p\n\n", currentBasket);
+    if (currentBasket != NULL && currentBasket->id != basketID) {
+        puts("basket does not exist");
+        return NULL;
+    }
     return currentBasket;
 }
 
@@ -389,6 +419,36 @@ void deleteCustomer(char *name, char *surname) {
     }
 }
 
+void printBasket(BasketPtr currentBasket) {
+    /*
+        Prints a basket
+        and calls printProductList()
+    */
+    printf("Basket ID: %d \n", currentBasket->id);
+        printf("\tProduct id: %d\n", currentBasket->productList->productID);
+        printf("\tProduct id: %d\n", currentBasket->productList->next->productID);
+        printf("\tProduct id: %d\n", currentBasket->productList->next->next->productID);
+        printf("\tProduct id: %d\n", currentBasket->productList->next->next->next->productID);
+        printf("\tProduct id: %d\n", currentBasket->productList->next->next->next->next->productID);
+
+    
+    currentBasket = currentBasket->nextPtr;
+    printf("Basket ID: %d \n", currentBasket->id);
+        printf("\tProduct id: %d\n", currentBasket->productList->productID);
+        printf("\tProduct id: %d\n", currentBasket->productList->next->productID);
+        printf("\tProduct id: %d\n", currentBasket->productList->next->next->productID);
+        printf("\tProduct id: %d\n", currentBasket->productList->next->next->next->productID);
+        printf("\tProduct id: %d\n", currentBasket->productList->next->next->next->next->productID);
+}
+
+void printProductList(ProductListPtr currentProductList) {
+    /*
+        Prints a productList linked list
+    */
+    while (currentProductList->next != NULL)
+        printf(" %d", currentProductList->productID);
+    printf(" %d", currentProductList->productID);
+}
 
 int main() {
     readCustomerFile();
@@ -398,6 +458,11 @@ int main() {
     // printProducts();
 
     readBasketFile();
+
+    
+    CustomerPtr currentcustomer = headCustomer;
+    printBasket((headCustomer->basketList));
+            
     return 0;
 }
 
