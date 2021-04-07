@@ -213,7 +213,7 @@ void readBasketFile() {
     while(fgets(currentLine, BUFFER, file)) {
         sscanf(currentLine, "%d %d %d", &customerID, &basketID, &productID);
         addBasket(customerID,basketID, productID);
-        // printf( "customerID: %d basketID: %d productID: %d\n", customerID, basketID, productID);
+        // incrementBasketPrice()
     }
 
     fclose(file);    
@@ -306,6 +306,20 @@ void addProductList(BasketPtr basket, int productID) {
 
     currentProductListPtr->next = newProductListPtr;
 
+}
+
+CustomerPtr getCustomer(int customerID) {
+    /*
+        Returns CustomerPtr by customerID
+    */
+
+    CustomerPtr currentCustomer = headCustomer;
+    while (currentCustomer != NULL && currentCustomer->id != customerID)
+    {
+        currentCustomer = currentCustomer->nextPtr;
+    }
+    
+    return currentCustomer;
 }
 
 BasketPtr getBasket(CustomerPtr customer, int basketID) {
@@ -492,6 +506,7 @@ int main() {
     
     }
     */
+
 
     return 0;
 }
