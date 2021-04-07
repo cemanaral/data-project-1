@@ -125,7 +125,21 @@ int main() {
     printf("amount %d\n", getBasket(getCustomer(1), 2)->amount);
     printf("amount %d\n", getBasket(getCustomer(1), 3)->amount);
 
-    
+    currentCustomer = headCustomer;
+    currentBasket = NULL;
+    ProductListPtr currentProduct = NULL;
+    {
+        currentBasket = currentCustomer->basketList;
+        while (currentBasket != NULL){
+            currentProduct = currentBasket->productList;
+            while (currentProduct != NULL) {
+                printf("product name:\t%s \n", getProductInfo(currentProduct->productID)->name);
+                currentProduct = currentProduct->next;
+            }
+            currentBasket = currentBasket->nextPtr;
+        }
+        currentCustomer = currentCustomer->nextPtr;
+    }
 
     return 0;
 }

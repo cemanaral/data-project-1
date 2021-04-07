@@ -1,3 +1,5 @@
+
+
 void readBasketFile() {
     /*
         Reads basket.txt
@@ -71,11 +73,21 @@ void addBasket(int customerID, int basketID, int productID) {
         // getting to the end of productlist
         // to append new product node
         ProductListPtr currentProductListPtr = currentBasket->productList;
-        while (currentProductListPtr->next != NULL)
+        ProductListPtr previousProductListPtr = NULL;
+
+        // (currentProductListPtr != NULL && strcmp(getProductInfo(currentProductListPtr->productID)->name , getProductInfo(productID)->name ))
+        while (currentProductListPtr != NULL
+            && strcmp(getProductInfo(currentProductListPtr->productID)->name , getProductInfo(productID)->name )) {
+            previousProductListPtr = currentProductListPtr;
             currentProductListPtr = currentProductListPtr->next;
-        
-        currentProductListPtr->next = (ProductListPtr)malloc(sizeof(ProductList));
-        currentProductListPtr->next->productID = productID;
+        }
+            
+        ProductListPtr newProductList = (ProductListPtr)malloc(sizeof(ProductList));
+        newProductList->productID = productID;
+
+        previousProductListPtr->next = newProductList;
+        newProductList->next = currentProductListPtr;
+
     }
      
 
