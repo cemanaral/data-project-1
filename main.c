@@ -444,6 +444,23 @@ ProductPtr getProductInfo(int productID) {
     return currentProduct;
 }
 
+void incrementBasketPrice(BasketPtr basket) {
+    /*
+        Increments basket prices
+        after reading operations are done
+    */
+
+    ProductListPtr currentProductNode = basket->productList;
+    int price;
+    while (currentProductNode != NULL) {
+        price = getProductInfo(currentProductNode->productID)->price;
+        basket->amount += price;
+        currentProductNode = currentProductNode->next;
+    }
+
+    return;
+}
+
 int main() {
     readCustomerFile();
     // printCustomers();
@@ -453,6 +470,10 @@ int main() {
 
     readBasketFile();
 
+    printf("before amount: %d\n", headCustomer->basketList->amount);
+    incrementBasketPrice(headCustomer->basketList);
+    printf("after amount: %d\n", headCustomer->basketList->amount);
+
     /*    
     CustomerPtr currentcustomer = headCustomer;
     while (currentcustomer != NULL) {
@@ -461,11 +482,16 @@ int main() {
     }
     */
 
- 
-   int option;
-   scanf("%d", &option);
-
-   printf("Name: %s  ", getProductInfo(option)->name);
+    /*
+    int option;
+    
+    
+    while (1) {
+        scanf("%d", &option);
+        printf("Name: %s  Price: %d", getProductInfo(option)->name, getProductInfo(option)->price);
+    
+    }
+    */
 
     return 0;
 }
