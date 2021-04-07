@@ -69,6 +69,8 @@ BasketPtr getBasket(CustomerPtr customer, int basketID);
 void addProductList(BasketPtr basket, int productID);
 void printBaskets(CustomerPtr customer);
 void printProductList(ProductListPtr currentProductList);
+CustomerPtr getCustomer(int customerID);
+void incrementBasketPrice(BasketPtr basket);
 ////////
 
 // Global head ptrs for convinience
@@ -213,7 +215,6 @@ void readBasketFile() {
     while(fgets(currentLine, BUFFER, file)) {
         sscanf(currentLine, "%d %d %d", &customerID, &basketID, &productID);
         addBasket(customerID,basketID, productID);
-        // incrementBasketPrice()
     }
 
     fclose(file);    
@@ -484,29 +485,25 @@ int main() {
 
     readBasketFile();
 
-    printf("before amount: %d\n", headCustomer->basketList->amount);
-    incrementBasketPrice(headCustomer->basketList);
-    printf("after amount: %d\n", headCustomer->basketList->amount);
+    // increments amount of every basket after reading
+    CustomerPtr currentCustomer = headCustomer;
+    BasketPtr currentBasket;
 
-    /*    
-    CustomerPtr currentcustomer = headCustomer;
-    while (currentcustomer != NULL) {
-        printBaskets(currentcustomer);
-        currentcustomer = currentcustomer->nextPtr;
+    while (currentCustomer != NULL) {
+        currentBasket = currentCustomer->basketList;
+        while (currentBasket != NULL) {
+            incrementBasketPrice(currentBasket);
+            currentBasket = currentBasket->nextPtr;
+        }
+        currentCustomer = currentCustomer->nextPtr;
     }
-    */
 
-    /*
-    int option;
-    
-    
-    while (1) {
-        scanf("%d", &option);
-        printf("Name: %s  Price: %d", getProductInfo(option)->name, getProductInfo(option)->price);
-    
-    }
-    */
 
+    printf("amount %d\n", getBasket(getCustomer(1), 1)->amount);
+    printf("amount %d\n", getBasket(getCustomer(1), 2)->amount);
+    printf("amount %d\n", getBasket(getCustomer(1), 3)->amount);
+
+    
 
     return 0;
 }
