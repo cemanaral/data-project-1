@@ -97,49 +97,64 @@ int isEmpty(void *headPtr) {
     return headPtr == 0;
 }
 
+void instructions() {
+    /*
+        Prints main menu instructions
+    */
+
+    puts("1. Add a customer");
+    puts("2. Add basket");
+    puts("3. Remove customer");
+    puts("4. List the customers who bought a specific product");
+    puts("5. List the total shopping amounts of each customer");
+    puts("6. Exit\n");
+
+}
+
+int getChoice() {
+    /*
+        Gets choice from STDIN and returns it
+    */
+
+    int choice;
+    printf("? ");
+    scanf("%d", &choice);
+    return choice;
+}
 
 int main() {
+    // Reading operations
     readCustomerFile();
-    // printCustomers();
-    
+    // printCustomers();    
     readProductFile();
     // printProducts();
-
     readBasketFile();
+    ////////////////////
 
     // increments amount of every basket after reading
     CustomerPtr currentCustomer = headCustomer;
     BasketPtr currentBasket;
 
-    while (currentCustomer != NULL) {
+    while (currentCustomer != NULL) { // Loops every customer
         currentBasket = currentCustomer->basketList;
-        while (currentBasket != NULL) {
-            incrementBasketPrice(currentBasket);
+        while (currentBasket != NULL) { // Loops every basket of the customer
+            incrementBasketPrice(currentBasket);    // increments the basket
             currentBasket = currentBasket->nextPtr;
         }
         currentCustomer = currentCustomer->nextPtr;
     }
+    /////////////////////////////////////////////////
 
-
-    printf("amount %d\n", getBasket(getCustomer(1), 1)->amount);
-    printf("amount %d\n", getBasket(getCustomer(1), 2)->amount);
-    printf("amount %d\n", getBasket(getCustomer(1), 3)->amount);
-
-    currentCustomer = headCustomer;
-    currentBasket = NULL;
-    ProductListPtr currentProduct = NULL;
+    puts("Data Structures PROJECT #1 E-COMMERCE SYSTEM");
+    puts("Cem Anaral | Ali Yetim | Tevfik Arici");
+    int choice;
+    instructions();
+    while ((choice = getChoice()) != 6 ) // While choice is not 6 (which is the exit condition)
     {
-        currentBasket = currentCustomer->basketList;
-        while (currentBasket != NULL){
-            currentProduct = currentBasket->productList;
-            while (currentProduct != NULL) {
-                printf("product name:\t%s \n", getProductInfo(currentProduct->productID)->name);
-                currentProduct = currentProduct->next;
-            }
-            currentBasket = currentBasket->nextPtr;
-        }
-        currentCustomer = currentCustomer->nextPtr;
+        instructions();
     }
+
+
 
     return 0;
 }
