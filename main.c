@@ -426,6 +426,9 @@ void printBaskets(CustomerPtr customer) {
 
     BasketPtr currentBasket = customer->basketList;
     ProductListPtr currentProductList;
+    
+    printf("Customer ID: %d\n", customer->id);
+
     while (currentBasket != NULL) {
         currentProductList = currentBasket->productList;
 
@@ -436,9 +439,7 @@ void printBaskets(CustomerPtr customer) {
         }
         currentBasket = currentBasket->nextPtr;
     }
-        
-
-
+    printf("\n");
 }
 
 void printProductList(ProductListPtr currentProductList) {
@@ -461,7 +462,10 @@ int main() {
 
     
     CustomerPtr currentcustomer = headCustomer;
-    printBaskets(headCustomer);
+    while (currentcustomer != NULL) {
+        printBaskets(currentcustomer);
+        currentcustomer = currentcustomer->nextPtr;
+    }
             
     return 0;
 }
