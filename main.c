@@ -67,7 +67,7 @@ typedef ProductList* ProductListPtr;
 void addBasket(int customerID, int basketID, int productID);
 BasketPtr getBasket(CustomerPtr customer, int basketID);
 void addProductList(BasketPtr basket, int productID);
-void printBasket(BasketPtr currentBasket);
+void printBaskets(CustomerPtr customer);
 void printProductList(ProductListPtr currentProductList);
 ////////
 
@@ -419,26 +419,26 @@ void deleteCustomer(char *name, char *surname) {
     }
 }
 
-void printBasket(BasketPtr currentBasket) {
+void printBaskets(CustomerPtr customer) {
     /*
-        Prints a basket
-        and calls printProductList()
+        Prints all baskets (and products) of a customer
     */
-    printf("Basket ID: %d \n", currentBasket->id);
-        printf("\tProduct id: %d\n", currentBasket->productList->productID);
-        printf("\tProduct id: %d\n", currentBasket->productList->next->productID);
-        printf("\tProduct id: %d\n", currentBasket->productList->next->next->productID);
-        printf("\tProduct id: %d\n", currentBasket->productList->next->next->next->productID);
-        printf("\tProduct id: %d\n", currentBasket->productList->next->next->next->next->productID);
 
-    
-    currentBasket = currentBasket->nextPtr;
-    printf("Basket ID: %d \n", currentBasket->id);
-        printf("\tProduct id: %d\n", currentBasket->productList->productID);
-        printf("\tProduct id: %d\n", currentBasket->productList->next->productID);
-        printf("\tProduct id: %d\n", currentBasket->productList->next->next->productID);
-        printf("\tProduct id: %d\n", currentBasket->productList->next->next->next->productID);
-        printf("\tProduct id: %d\n", currentBasket->productList->next->next->next->next->productID);
+    BasketPtr currentBasket = customer->basketList;
+    ProductListPtr currentProductList;
+    while (currentBasket != NULL) {
+        currentProductList = currentBasket->productList;
+
+        printf("\tBasket id: %d \n", currentBasket->id);
+        while (currentProductList != NULL) {
+            printf("\t\tProduct id: %d \n", currentProductList->productID);
+            currentProductList = currentProductList->next;
+        }
+        currentBasket = currentBasket->nextPtr;
+    }
+        
+
+
 }
 
 void printProductList(ProductListPtr currentProductList) {
@@ -461,7 +461,7 @@ int main() {
 
     
     CustomerPtr currentcustomer = headCustomer;
-    printBasket((headCustomer->basketList));
+    printBaskets(headCustomer);
             
     return 0;
 }
