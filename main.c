@@ -142,26 +142,10 @@ void printProducts() {
     */
     ProductPtr currentNode = headProduct;
 
-    if (isEmpty(headProduct)) {
-        puts("Product list is empty.");
-        return;
-    }
-
-    puts("**Product List**");
-
-    while(currentNode->nextPtr != NULL) {
-        printf("id: %d name: %s category: %s price: %d\n",
-            currentNode->id, currentNode->name,
-            currentNode->category, currentNode->price);
-
+    while (currentNode != NULL) {
+        printf("id: %d \n", currentNode->id);
         currentNode = currentNode->nextPtr;
     }
-    printf("id: %d name: %s category: %s price: %d\n",
-            currentNode->id, currentNode->name,
-            currentNode->category, currentNode->price);
-    printf("\n");
-
-
 }
 
 
@@ -357,7 +341,7 @@ void addProduct(int id, char *name, char *category, int price) {
     newProductPtr->price = price;
 
     // while (currentPtr != NULL && currentPtr->name[0] <= newProductPtr->name[0])
-    while (currentPtr != NULL &&  currentPtr->name[0] <= newProductPtr->name[0] ){
+    while (currentPtr != NULL){
         previousPtr = currentPtr;
         currentPtr = currentPtr->nextPtr;
     }
@@ -432,7 +416,7 @@ void printBaskets(CustomerPtr customer) {
     while (currentBasket != NULL) {
         currentProductList = currentBasket->productList;
 
-        printf("\tBasket id: %d \n", currentBasket->id);
+        printf("\tBasket id: %d  |  Total Amount: %d \n", currentBasket->id, currentBasket->amount);
         while (currentProductList != NULL) {
             printf("\t\tProduct id: %d \n", currentProductList->productID);
             currentProductList = currentProductList->next;
@@ -451,6 +435,15 @@ void printProductList(ProductListPtr currentProductList) {
     printf(" %d", currentProductList->productID);
 }
 
+ProductPtr getProductInfo(int productID) {
+    ProductPtr currentProduct = headProduct;
+
+    while (currentProduct != NULL && currentProduct->id != productID) {
+        currentProduct = currentProduct->nextPtr;
+    }
+    return currentProduct;
+}
+
 int main() {
     readCustomerFile();
     // printCustomers();
@@ -460,13 +453,20 @@ int main() {
 
     readBasketFile();
 
-    
+    /*    
     CustomerPtr currentcustomer = headCustomer;
     while (currentcustomer != NULL) {
         printBaskets(currentcustomer);
         currentcustomer = currentcustomer->nextPtr;
     }
-            
+    */
+
+ 
+   int option;
+   scanf("%d", &option);
+
+   printf("Name: %s  ", getProductInfo(option)->name);
+
     return 0;
 }
 
