@@ -288,6 +288,40 @@ void CLI_removeCustomer() {
     printCustomers();
 }
 
+void CLI_listSpesificCustomers() {
+    /*
+        Lists the customers who bought a specific product
+    */
+    // Firstly products must be listed.
+    printProducts();
+    int productID;
+    printf("Please enter productID\n? ");
+    scanf("%d", &productID);
+
+    CustomerPtr currentCustomer = headCustomer;
+    BasketPtr currentBasket;
+    ProductListPtr currentProduct;
+
+    printf("-Customers who bought %s-\n", getProductInfo(productID)->name);
+
+    while (currentCustomer != NULL) { // Loops every customer
+        currentBasket = currentCustomer->basketList;
+        while (currentBasket != NULL) { // Loops every basket
+            currentProduct = currentBasket->productList;
+            while (currentProduct != NULL) {    // Loops every product in the currentBasket
+                
+                if (currentProduct->productID == productID) { // If there is a match, prints customer info
+                    printf("  %d %s %s\n",currentCustomer->id , currentCustomer->name, currentCustomer->surname);
+                }
+                currentProduct = currentProduct->next;
+            }
+            currentBasket = currentBasket->nextPtr;
+        }
+        currentCustomer = currentCustomer->nextPtr;
+    }
+
+}
+
 int main() {
 
     // Reading operations
@@ -333,8 +367,9 @@ int main() {
             CLI_removeCustomer();
         }
 
+        // List the customers who bought a specific product
         else if (choice == 4) {
-            puts("4");
+            CLI_listSpesificCustomers();
         }
 
         else if (choice == 5) {
