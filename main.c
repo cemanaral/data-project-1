@@ -198,12 +198,22 @@ int main() {
 
             } while (!isUnique(newName, newSurname));    
 
-            // printf("%s %s\n", newName, newSurname);
 
+            // gets the last ID in customer list
+            int lastID;
+            CustomerPtr currentCustomer = headCustomer;
 
+            //  currentCustomer != NULL to not get segmentation fault if no one is in the list
+            while (currentCustomer != NULL && currentCustomer->nextPtr != NULL)
+                currentCustomer = currentCustomer->nextPtr;
             
-
-            // ID of newly added customer will be one more than the last
+            if (currentCustomer == NULL) // If list is empty, ID of the customer will be 1.
+                lastID = 1;
+            else // ID will be 1 more than the last
+                lastID = currentCustomer->id + 1;
+            /////////////////////////////////////////////////
+            
+            printf("%d \n", lastID);
             // basket will be initially empty
 
 
