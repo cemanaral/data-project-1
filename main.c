@@ -198,22 +198,79 @@ void CLI_addBasket() {
 
     // 2.b. Select one of the customers
     CustomerPtr customer;
-    int id;
+    int customerID;
     printf("Please type the ID of the customer\n? ");
-    scanf("%d", &id);
-    customer = getCustomer(id);
+    scanf("%d", &customerID);
+    customer = getCustomer(customerID);
 
     // 2.c. List the products
     printProducts();
 
     // 2.d Add a product
+    
+    // gets basket id
+    int basketID;
+    BasketPtr basket;
+    if (customer->basketList == NULL)
+    {
+        basketID = 1;
+        customer->basketList = (BasketPtr)malloc(sizeof(Basket));
+        customer->basketList->id = basketID;
+        customer->basketList->amount = 0;
+        customer->basketList->nextPtr = NULL;
+        basket = customer->basketList;
+    }
+    else {  // finds the last basket ID and increments it
+        BasketPtr currentBasket = customer->basketList;
+        while (currentBasket != NULL && currentBasket->nextPtr != NULL)
+            currentBasket = currentBasket->nextPtr;
+        basketID = currentBasket->id + 1;
+        basket = (BasketPtr)malloc(sizeof(Basket));
+        basket->amount = 0;
+        basket->id = basketID;
+        basket->nextPtr = NULL;
+
+        currentBasket->nextPtr = basket;
+    }
+    
+    
+    
     int productID;
+    ProductListPtr currentProductNode;
+    ProductListPtr newProductNode;
     do {
         printf("Please type product id (-1 to exit)\n? ");
         scanf("%d", &productID);
-    } while (productID != -1);
+        if (productID == -1)
+            break;
 
+        // add to basket
+        addBasket(customerID, basketID, productID);
+        /*
+        currentProductNode = basket->productList;
+        if (basket->productList == NULL) {
+            basket->productList->productID = productID;
+            basket->productList->next = NULL;
+        } else {
+            while (currentProductNode->next != NULL)
+                currentProductNode = currentProductNode->next;
+            newProductNode = (ProductListPtr)malloc(sizeof(ProductList));
+            newProductNode->productID = productID;
+            newProductNode->next = NULL;
+            currentProductNode->next = newProductNode;
+        }
+        */
+
+        // increments amount of the basket
+        // incrementBasketPrice(basket);
+        basket->amount += getProductInfo(productID)->price;
+
+    } while (1);
+
+    printBaskets(customer);
+    // !!!BUG!!!!! onceden customer ekleyip cikarinca bi sorun olmuyor
     // 2.e Complete shopping
+
 
 
 }
