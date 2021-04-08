@@ -147,7 +147,46 @@ int isUnique(char name[BUFFER/2], char surname[BUFFER/2]) {
     return 1;
 }
 
+void CLI_addCustomer() {
+    /*
+        Adds customer from STDIN
+    */
 
+    // Print all customers
+    printCustomers();
+
+    // Gets a name and surname
+    char newName[BUFFER/2];
+    char newSurname[BUFFER/2];
+
+    // while name and surname is not unique
+    // gets name and surname from stdin
+    do {
+        printf("please enter name and surname (? Name Surname)\n? ");
+        scanf("%s %s", newName, newSurname);
+
+    } while (!isUnique(newName, newSurname));    
+
+
+    // gets the last ID in customer list
+    int lastID;
+    CustomerPtr currentCustomer = headCustomer;
+
+    //  currentCustomer != NULL to not get segmentation fault if no one is in the list
+    while (currentCustomer != NULL && currentCustomer->nextPtr != NULL)
+        currentCustomer = currentCustomer->nextPtr;
+    
+    if (currentCustomer == NULL) // If list is empty, ID of the customer will be 1.
+        lastID = 1;
+    else // ID will be 1 more than the last
+        lastID = currentCustomer->id + 1;
+    /////////////////////////////////////////////////
+
+    printf("%d \n", lastID);
+    // Adds the customer
+    addCustomer(lastID, newName, newSurname);
+    printCustomers();
+}
 
 int main() {
 
@@ -181,44 +220,10 @@ int main() {
     {
         // Add a customer
         if (choice == 1) {
-            puts("1");
-
-            // Print all customers name and surname etc
-            printCustomers();
-
-            // Gets a name and surname
-            char newName[BUFFER/2];
-            char newSurname[BUFFER/2];
-
-            // while name and surname is not unique
-            // gets name and surname from stdin
-            do {
-                printf("please enter name and surname (? Name Surname)\n? ");
-                scanf("%s %s", newName, newSurname);
-
-            } while (!isUnique(newName, newSurname));    
-
-
-            // gets the last ID in customer list
-            int lastID;
-            CustomerPtr currentCustomer = headCustomer;
-
-            //  currentCustomer != NULL to not get segmentation fault if no one is in the list
-            while (currentCustomer != NULL && currentCustomer->nextPtr != NULL)
-                currentCustomer = currentCustomer->nextPtr;
-            
-            if (currentCustomer == NULL) // If list is empty, ID of the customer will be 1.
-                lastID = 1;
-            else // ID will be 1 more than the last
-                lastID = currentCustomer->id + 1;
-            /////////////////////////////////////////////////
-
-            printf("%d \n", lastID);
-            // Adds the customer
-            addCustomer(lastID, newName, newSurname);
-            printCustomers();
+            CLI_addCustomer();
         }
 
+        // Add basket:
         else if (choice == 2) {
             puts("2");
         }
