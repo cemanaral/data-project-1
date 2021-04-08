@@ -54,8 +54,11 @@ void addProduct(int id, char *name, char *category, int price) {
     strcpy(newProductPtr->category, category);
     newProductPtr->price = price;
 
+
     // while (currentPtr != NULL && currentPtr->name[0] <= newProductPtr->name[0])
-    while (currentPtr != NULL){
+    while (currentPtr != NULL) {
+
+
         previousPtr = currentPtr;
         currentPtr = currentPtr->nextPtr;
     }
@@ -74,6 +77,9 @@ void addProduct(int id, char *name, char *category, int price) {
 
 
 void readProductFile() {
+    /*
+        Reads Product txt file
+    */
     FILE* file;
     char currentLine[BUFFER];
 
@@ -84,7 +90,7 @@ void readProductFile() {
     char category[BUFFER / 2];
     int price;
 
-    while(fgets(currentLine, BUFFER, file)) {
+    while(fgets(currentLine, BUFFER, file)) { // reads the file
         sscanf(currentLine, "%d %s %s %d", 
             &id, name, category, &price);
 
@@ -110,9 +116,12 @@ void printProductList(ProductListPtr currentProductList) {
 }
 
 ProductPtr getProductInfo(int productID) {
+    /*
+        Returns ProductPtr from productID
+    */
     ProductPtr currentProduct = headProduct;
 
-    while (currentProduct != NULL && currentProduct->id != productID) {
+    while (currentProduct != NULL && currentProduct->id != productID) { // Loops every product
         currentProduct = currentProduct->nextPtr;
     }
     return currentProduct;
