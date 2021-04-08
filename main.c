@@ -63,7 +63,7 @@ typedef struct ProductList ProductList;
 typedef ProductList* ProductListPtr;
 ////////
 
-// function declerations (only needed ones)
+// function declerations (only needed ones for compilation)
 void addBasket(int customerID, int basketID, int productID);
 BasketPtr getBasket(CustomerPtr customer, int basketID);
 void addProductList(BasketPtr basket, int productID);
@@ -122,7 +122,36 @@ int getChoice() {
     return choice;
 }
 
+int isUnique(char name[BUFFER/2], char surname[BUFFER/2]) {
+    /*      
+        Checks whether the name and surname are unique
+        If unique returns 1
+        if not, returns 0
+    */
+    
+    CustomerPtr currentCustomer = headCustomer;
+    int isNameUnique;
+    int isSurnameUnique;
+    
+    while (currentCustomer != NULL)
+    {
+        isNameUnique = strcmp(currentCustomer->name, name) == 0;
+        isSurnameUnique = strcmp(currentCustomer->surname, surname) == 0;
+        if (isNameUnique && isSurnameUnique) {
+            puts("not unique");
+            return 0;
+
+        }
+        currentCustomer = currentCustomer->nextPtr;
+    }
+    puts("unique");
+    return 1;
+}
+
+
+
 int main() {
+
     // Reading operations
     readCustomerFile();
     // printCustomers();    
@@ -151,11 +180,55 @@ int main() {
     instructions();
     while ((choice = getChoice()) != 6 ) // While choice is not 6 (which is the exit condition)
     {
+        // Add a customer
+        if (choice == 1) {
+            puts("1");
+
+            // Print all customers name and surname etc
+            printCustomers();
+
+            // Gets a name and surname
+            char newName[BUFFER/2];
+            char newSurname[BUFFER/2];
+
+            // while name and surname is not unique
+            // gets name and surname from stdin
+            printf("please enter name and surname (? Name Surname)\n? ");
+            scanf("%s %s", newName, newSurname);
+            printf("%s %s\n", newName, newSurname);
+            isUnique(newName, newSurname);    
+
+            // printf("%s %s\n", newName, newSurname);
+
+
+            
+
+            // ID of newly added customer will be one more than the last
+            // basket will be initially empty
+
+
+        }
+
+        else if (choice == 2) {
+            puts("2");
+        }
+
+        else if (choice == 3) {
+            puts("3");
+        }
+
+        else if (choice == 4) {
+            puts("4");
+        }
+
+        else if (choice == 5) {
+            puts("5");
+        }
+
         instructions();
     }
 
-
-
     return 0;
+
 }
 
