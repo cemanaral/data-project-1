@@ -322,6 +322,34 @@ void CLI_listSpesificCustomers() {
 
 }
 
+
+void CLI_listShoppingAmounts() {
+    /*
+        Lists the total shopping amounts of each customer:
+    */
+    CustomerPtr currentCustomer = headCustomer;
+    int amountCurrentCustomer;
+    BasketPtr currentBasket;
+    printf("\n");
+    while (currentCustomer != NULL) // loops every customer
+    {
+        int amountCurrentCustomer = 0;
+        currentBasket = currentCustomer->basketList;
+        while (currentBasket != NULL)  {
+            amountCurrentCustomer += currentBasket->amount;
+            currentBasket = currentBasket->nextPtr;
+        }
+        if (amountCurrentCustomer != 0)
+            printf("%d %s %s $%d\n", currentCustomer->id, currentCustomer->name, currentCustomer->surname, amountCurrentCustomer);
+        else
+            printf("%d %s %s -No purchase-\n", currentCustomer->id, currentCustomer->name, currentCustomer->surname);
+        currentCustomer = currentCustomer->nextPtr;
+    }
+    printf("\n");
+
+
+}
+
 int main() {
 
     // Reading operations
@@ -372,8 +400,9 @@ int main() {
             CLI_listSpesificCustomers();
         }
 
+        // List the total shopping amounts of each customer:
         else if (choice == 5) {
-            puts("5");
+            CLI_listShoppingAmounts();
         }
 
         instructions();
