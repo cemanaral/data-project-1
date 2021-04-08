@@ -275,6 +275,19 @@ void CLI_addBasket() {
 
 }
 
+void CLI_removeCustomer() {
+    // List all customers
+    printCustomers();
+    
+    char name[BUFFER/2];
+    char surname[BUFFER/2];
+    printf("Please enter name and surname which will be deleted (? name surname)\n? ");
+    scanf("%s %s", name, surname);
+
+    deleteCustomer(name, surname);
+    printCustomers();
+}
+
 int main() {
 
     // Reading operations
@@ -315,8 +328,9 @@ int main() {
             CLI_addBasket();
         }
 
+        // Remove Customer
         else if (choice == 3) {
-            puts("3");
+            CLI_removeCustomer();
         }
 
         else if (choice == 4) {

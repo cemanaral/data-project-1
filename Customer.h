@@ -114,20 +114,33 @@ CustomerPtr getCustomer(int customerID) {
 
 
 void deleteCustomer(char *name, char *surname) {
+    /*
+        Deletes a customer by name and surname
+    */
 
     CustomerPtr temp = headCustomer;
+    CustomerPtr previous = NULL;
 
-    while (strcmp(temp->nextPtr->name, name) && strcmp(temp->nextPtr->surname, surname) && temp->nextPtr != NULL) {
+    // if the first node
+    if (temp != NULL && strcmp(name,temp->name)==0 && strcmp(temp->surname, surname)==0) {
+        headCustomer = temp->nextPtr;
+        free(temp);
+        return;
+    }
+    
+    // finds the correct customer which'll be deleted
+    while (temp != NULL && strcmp(name,temp->name)!=0 && strcmp(temp->surname, surname)!=0) {
+        previous = temp;
         temp = temp->nextPtr;
     }
 
-    if (temp->nextPtr->nextPtr != NULL) {
-        CustomerPtr temp1 = temp->nextPtr;
-        temp->nextPtr = temp1->nextPtr;
-        free(temp1);
-    } else {
-        CustomerPtr temp1 = temp->nextPtr;
-        free(temp1->nextPtr);
-    }
+    // If does not exist
+    if (temp == NULL)
+        return;
+
+    previous->nextPtr = temp->nextPtr;
+    free(temp);
+
+
 }
 
