@@ -188,6 +188,36 @@ void CLI_addCustomer() {
     printCustomers();
 }
 
+void CLI_addBasket() {
+    /*
+        Adds basket from STDIN
+    */
+
+    // 2.a. List customers    
+    printCustomers();
+
+    // 2.b. Select one of the customers
+    CustomerPtr customer;
+    int id;
+    printf("Please type the ID of the customer\n? ");
+    scanf("%d", &id);
+    customer = getCustomer(id);
+
+    // 2.c. List the products
+    printProducts();
+
+    // 2.d Add a product
+    int productID;
+    do {
+        printf("Please type product id (-1 to exit)\n? ");
+        scanf("%d", &productID);
+    } while (productID != -1);
+
+    // 2.e Complete shopping
+
+
+}
+
 int main() {
 
     // Reading operations
@@ -225,7 +255,7 @@ int main() {
 
         // Add basket:
         else if (choice == 2) {
-            puts("2");
+            CLI_addBasket();
         }
 
         else if (choice == 3) {

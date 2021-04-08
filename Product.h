@@ -6,7 +6,9 @@ void printProducts() {
     ProductPtr currentNode = headProduct;
 
     while (currentNode != NULL) {
-        printf("id: %d \n", currentNode->id);
+        printf("Product id: %d name: %s category: %s  price: $%d \n", 
+            currentNode->id, currentNode->name, currentNode->category, currentNode->price);
+
         currentNode = currentNode->nextPtr;
     }
 }
