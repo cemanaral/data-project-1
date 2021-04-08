@@ -138,13 +138,12 @@ int isUnique(char name[BUFFER/2], char surname[BUFFER/2]) {
         isNameUnique = strcmp(currentCustomer->name, name) == 0;
         isSurnameUnique = strcmp(currentCustomer->surname, surname) == 0;
         if (isNameUnique && isSurnameUnique) {
-            puts("not unique");
+            printf("%s %s is already in the system!\n", name, surname);
             return 0;
 
         }
         currentCustomer = currentCustomer->nextPtr;
     }
-    puts("unique");
     return 1;
 }
 
@@ -193,10 +192,11 @@ int main() {
 
             // while name and surname is not unique
             // gets name and surname from stdin
-            printf("please enter name and surname (? Name Surname)\n? ");
-            scanf("%s %s", newName, newSurname);
-            printf("%s %s\n", newName, newSurname);
-            isUnique(newName, newSurname);    
+            do {
+                printf("please enter name and surname (? Name Surname)\n? ");
+                scanf("%s %s", newName, newSurname);
+
+            } while (!isUnique(newName, newSurname));    
 
             // printf("%s %s\n", newName, newSurname);
 
