@@ -212,11 +212,11 @@ int main() {
             else // ID will be 1 more than the last
                 lastID = currentCustomer->id + 1;
             /////////////////////////////////////////////////
-            
+
             printf("%d \n", lastID);
-            // basket will be initially empty
-
-
+            // Adds the customer
+            addCustomer(lastID, newName, newSurname);
+            printCustomers();
         }
 
         else if (choice == 2) {
